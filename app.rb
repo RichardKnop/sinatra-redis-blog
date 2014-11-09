@@ -3,8 +3,6 @@ require 'bundler'
 
 Bundler.require
 
-r = Redis.new
-
 class Repo
   attr_reader :db
 
@@ -30,6 +28,7 @@ class Repo
   def delete key
     raise "#{klazz} does not exists" unless keys.include? key
     db.del(key)
+    db.lrem(meta, 1, key)
   end 
 
   def store obj
@@ -37,6 +36,7 @@ class Repo
       db.hmset(obj.id, *(obj.as_hash.to_a))
     else 
       obj.id = generate_key
+      db.lpush(meta, obj.id)
       db.hmset(obj.id, *(obj.as_hash.to_a))
     end
   end
@@ -44,7 +44,11 @@ class Repo
 private
 
   def keys
-    db.keys("#{prefix}:*")
+    db.lrange(meta, 0, -1)
+  end
+
+  def meta
+    "_#{prefix}_keys_meta"
   end
 
   def generate_key
