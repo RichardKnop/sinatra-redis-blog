@@ -1,0 +1,13 @@
+body {
+  text-align: center;
+}
+
+.container {
+  text-align: left;
+  width: 960px;
+  margin: 0 auto;
+}
+
+input, textarea {
+  display: block;
+}

@@ -1,0 +1,6 @@
+%h2= @post.title
+%p= @post.content
+%p
+  %a{:href => "/posts/#{@post.id}/edit"} Edit
+  |
+  %a{:href => "/posts/#{@post.id}/delete"} Delete

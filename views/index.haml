@@ -1,0 +1,6 @@
+%a{:href => '/posts/new'} Create new post
+- @posts.each do |post|
+  .post
+    %h2= post.title
+    %a{:href => "/posts/#{post.id}"} More
+    
