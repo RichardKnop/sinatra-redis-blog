@@ -7,7 +7,11 @@ class Repo
   attr_reader :db
 
   def initialize
-    @db = Redis.new
+    @db = Redis.new(
+      :host => "redis-master", 
+      :port => 6379, 
+      :db => 15
+    )
   end
   
   def get key
